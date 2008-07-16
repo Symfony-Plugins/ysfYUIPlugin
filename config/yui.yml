@@ -1,0 +1,47 @@
+prod:
+  suffix:             -min
+
+dev:
+  suffix:             -debug
+
+all:
+
+  # Yahoo! User Interface Libraries
+  lib_web_dir:        /static/ysf/yui
+  suffix:             -min
+
+  # symfony YUI - [forms, debug, admin]
+  sf_web_dir:         /static/ysf/symfony
+
+  # YUI Addons - carousel, domcollapse, yuiaddons [tools, forms, effects], cropper, sweettitles, lightbox
+  addons_web_dir:     /static/ysf/yui-addons
+  assets_web_dir:     /static/ysf/assets
+
+  # ExtJS Libraries
+  ext_web_dir:        /static/ysf/ext
+
+  allowed:
+    cultures:         [ en ]
+    skins:            [ sam ]
+
+  default:
+    culture:          en
+    skin:             sam
+    components:       [ ]
+
+  output:
+    xhtml_negotation: false
+
+  # route management
+  routes:
+    register:    false    # let yui handle routes (faster to add to routing.yml and disable here)
+
+  # behavior caching
+  cache:
+    enabled:     true     # cache behaviors
+    ttl:         9600     # cache expiration in seconds
+
+  # use ysfYUI loader + ysfYUIView
+  loader:
+    enabled:     true      # let sfYUI handl js/css inclusions
+    optimize:    true      # use rollup files to reduce connections

@@ -1,0 +1,205 @@
+= ysfYUIPlugin - symfony + Yahoo! User Interface libraries =
+
+The ysfYUIPlugin provides [http://symfony-project.com symfony] integration with the [http://developer.yahoo.com/yui/ Yahoo! User Interface libraries] is a complete foundation for enterprise web applications.
+
+The Yahoo! User Interface (YUI) Library is a set of utilities and controls, written in JavaScript, for building richly interactive web applications using techniques such as DOM scripting, DHTML and AJAX.
+
+   * '''YUI Developer Tools'''
+      * Logger Control
+      * Profiler (client-side, cross-browser profiling)
+      * ProfilerViewer Control
+      * YUI Test Utility
+   * '''YUI Core'''
+      * YAHOO Global Object (base requirement for all YUI components)
+      * DOM Collection (convenience methods for DOM interactions)
+      * Event Utility (event normalization and custom events)
+   * '''YUI Library Utilities''': Animation Utility, Browser History Manager, Connection Manager (for XHR/Ajax), Cookie Utility, , DataSource Utility, Drag and Drop Utility, Element Utility, Get Utility (dynamic script/css loading), ImageLoader Utility, JSON Utility, Resize Utility, Selector Utility, The YUI Loader Utility
+   * '''YUI Library Controls/Widgets''': AutoComplete, Button, Calendar, Charts, Color Picker, Container (including Module, Overlay, Panel, Tooltip, Dialog, SimpleDialog), DataTable, ImageCropper, Layout Manager, Menu, Rich Text Editor, Slider, TabView, TreeView, Uploader
+   * '''YUI Library CSS Tools'''
+      * CSS Reset (neutralizes browser CSS styles)
+      * CSS Base (applies consistent style foundation for common elements)
+      * CSS Fonts (foundation for typography and font-sizing)
+      * CSS Grids (more than 1,000 CSS-driven wireframes in a 4KB file)
+
+ysfYUIPlugin provides a few integrations for these utilities:
+
+   * Enhanced symfony web debug toolbar with Y! UI Logger and Profiler integration
+   * Loader for efficiently loading components in PHP (CSS/JS inclusion)
+   * Event management (on* => become events) + Caching
+   * Javascript Helpers for Ajax, Panels, Dialogs, Modal, and Tooltips
+   * Rich Form Widgets (Rich Text Editor, Slider, Color Picker, Auto-Complete, In-Place Editing)
+   * UI Controls (TabView, TreeView, LayoutManager)
+   * Clientside Form Validation
+
+
+=== Y! UI Helpers ===
+
+   * yui_link_to_function, yui_link_to_remote
+   * yui_periodically_call_function, yui_periodically_call_remote
+   * yui_update_element, yui_update_element_function
+   * yui_button, yui_button_to_function, yui_button_to_remote
+   * yui_form_remote_tag, yui_submit_tag, yui_submit_to_remote, yui_submit_image_to_remote
+   * yui_reset_tag
+
+   * yui_grid, yui_layout
+   * yui_toolbar, yui_container, yui_menu, yui_dialog, yui_tooltip
+   * yui_tabview, yui_treeview
+   * yui_datatable, yui_accordion, yui_lightbox, yui_collapse, yui_carousel, yui_resizable
+
+=== Y! UI Widgets ===
+
+   * ysfYUITextWidget (autocomplete / inline edit options)
+   * ysfYUICheckboxWidget
+   * ysfYUIRadioWidget
+   * ysfYUISelectWidget
+   * ysfYUIMultiSelectWidget
+   * ysfYUIFileUploadWidget
+
+   * ysfYUIEditorWidget
+   * ysfYUICalendarWidget
+   * ysfYUIColorPickerWidget
+   * ysfYUISliderWidget
+
+== License ==
+
+ysfYUIPlugin code is released under the [http://www.opensource.org/licenses/mit-license.php MIT license] and is free for all uses. All components in the YUI Library
+have been released as open source under a [http://www.opensource.org/licenses/bsd-license.php BSD license] and are free for all uses. See the
+included '''LICENSE''' files for the complete license.
+
+
+== Installation ==
+
+You can install symfony two ways:
+
+'''1. Install the plugin via the symfony cli'''
+
+{{{
+symfony plugin:install ysfYUIPlugin
+}}}
+
+'''2. Install the plugin via subversion'''
+
+This plugin can be downloaded and installed into the plugins directory of your project.
+
+{{{
+svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/branches/1.1 ysfYUIPlugin
+}}}
+
+
+== Configuration ==
+
+By default the ysfYUIPlugin changes the default view class to use '''ysfYUIView''' for handling the loading of the Yahoo! User Interface libraries (css/js) and managing generated events:
+{{{
+all:
+  enabled:          on
+  view_class:       ysfYUI
+  is_internal:      off
+}}}
+
+Edit the application  '''factories.yml''' and update the logger factory for 'sf_web_debug' to enable the enhanced debug toolbar:
+{{{
+  logger:
+    class: sfAggregateLogger
+    param:
+      level: debug
+      loggers:
+        sf_web_debug:
+          class: ysfYUIWebDebugLogger
+          param:
+            condition:       %SF_WEB_DEBUG%
+            xdebug_logging:  true
+            web_debug_class: ysfYUIWebDebug
+}}}
+
+The ysfYUIPlugin is extremely configurable per environment via the application level yui.yml:
+{{{
+prod:
+  suffix:             -min
+
+dev:
+  suffix:             -debug
+
+all:
+
+  # Yahoo! User Interface Libraries
+  lib_web_dir:        /static/ysf/yui
+  suffix:             -min
+
+  # symfony YUI - [forms, debug, admin]
+  sf_web_dir:         /static/ysf/symfony
+
+  # YUI Addons - carousel, domcollapse, yuiaddons [tools, forms, effects], cropper, sweettitles, lightbox
+  addons_web_dir:     /static/ysf/yui-addons
+  assets_web_dir:     /static/ysf/assets
+
+  # ExtJS Libraries
+  ext_web_dir:        /static/ysf/ext
+
+  allowed:
+    cultures:         [ en ]
+    skins:            [ sam ]
+
+  default:
+    culture:          en
+    skin:             sam
+    components:       [ yahoo, dom, event, connection, animation]
+
+  output:
+    xhtml_negotation: false
+
+  # route management
+  routes:
+    register:    false    # let yui handle routes (faster to add to routing.yml and disable here)
+
+  # behavior caching
+  cache:
+    enabled:     true     # cache behaviors
+    ttl:         9600     # cache expiration in seconds
+
+  # use ysfYUI loader + ysfYUIView
+  loader:
+    enabled:     true      # let sfYUI handl js/css inclusions
+    optimize:    true      # use rollup files to reduce connections
+}}}
+
+
+== Usage ==
+
+Loading YUI Components from am action or view:
+{{{
+<?php ysfYUI::addComponents('dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
+}}}
+
+
+Most of the rails inspired scriptaculous javascript helpers have equivalent functionality
+and syntax with the added benefit of an unobtrusive event driven design.
+{{{
+<?php echo button_to_remote('button_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+}}}
+
+
+
+'''The plugin comes with a demo module and form that show how to use the various integrations.''' This also serves as a tutorial.
+
+
+== TODO ==
+
+   * propel 1.2 logging for yui debug toolbar
+   * implement all widget options for js
+   * import new clientside validation
+   * autocomplete: from array, xml, json
+   * rich editor: flickr, calendar, media manager w/ upload / image cropper
+   
+   * admin generators with data table
+   * currency, language, country widgets
+   * time / date widgets
+   * selectbox dropdown with autocomplete widget
+   * number range selector -+ widget
+   
+   * caching
+   
+   * tests - unit for widgets, functional for events/components/widgets
+
+
+== CHANGELOG ==
+

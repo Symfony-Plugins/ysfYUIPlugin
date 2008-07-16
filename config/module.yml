@@ -1,0 +1,4 @@
+all:
+  enabled:          on
+  view_class:       ysfYUI
+  is_internal:      off
