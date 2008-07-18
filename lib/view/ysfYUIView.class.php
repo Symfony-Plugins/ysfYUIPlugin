@@ -1,9 +1,21 @@
 <?php
 
 /**
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
+ * file that was distributed with this source code.
+ *
+ */
+
+
+/**
  * ysfYUIView automatically adds unobstrusive javascript code to the view.
  *
- * @package    ysfYUIPlugin
+ * @package    ysymfony
  * @subpackage filter
  * @author     Francois Zaninotto <francois.zaninotto@symfony-project.com>
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>

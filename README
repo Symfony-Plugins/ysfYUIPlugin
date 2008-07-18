@@ -66,7 +66,6 @@ ysfYUIPlugin code is released under the [http://www.opensource.org/licenses/mit-
 have been released as open source under a [http://www.opensource.org/licenses/bsd-license.php BSD license] and are free for all uses. See the
 included '''LICENSE''' files for the complete license.
 
-
 == Installation ==
 
 You can install symfony two ways:
@@ -165,18 +164,190 @@ all:
 
 == Usage ==
 
+=== Basics ===
+
+==== Loading css/javascript ====
 Loading YUI Components from am action or view:
 {{{
-<?php ysfYUI::addComponents('dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
+<?php ysfYUI::addComponents('reset', 'fonts', 'grids', 'dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
 }}}
 
-
-Most of the rails inspired scriptaculous javascript helpers have equivalent functionality
-and syntax with the added benefit of an unobtrusive event driven design.
+ysfYUI will automatically resolve dependencies and use optimized rollup files:
 {{{
-<?php echo button_to_remote('button_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+<?php ysfYUI::addComponent('tabview'); ?>
 }}}
 
+==== Events ====
+Add events to dom elements unobtrsuively with php:
+
+Equivalent of YAHOO.util.Event.OnDomReady:
+{{{
+ysfYUI::addEvent('document', 'ready', "alert('hello world')");
+}}}
+
+Add a click event to a dom element:
+{{{
+ysfYUI::addEvent('domID', 'click', "alert('hello world')");
+}}}
+
+The same via helper:
+{{{
+yui_add_event('document', 'ready', "alert('hello world');
+}}}
+
+Similar to the sfUJSPlugin, this plugin will modify your existing helpers to add unobtrusive events:
+{{{
+<?php echo link_to('alert via link + onclick', 'content/about', array('onclick' => 'alert("hello world");')); ?>
+}}}
+
+Add an event to link to javascript function:
+{{{
+<?php echo yui_link_to_function('yui_link_to_function', "alert('demo');") ?>
+}}}
+
+=== Ajax + Buttons ===
+
+Most of the rails inspired scriptaculous javascript helpers have equivalent functionality and syntax with the added benefit of an unobtrusive event driven design.
+
+Create an unobtrusive ajax text link:
+{{{
+<?php echo yui_link_to_remote('yui_link_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+}}}
+
+Create a yui button and onclick update a dom element with the result:
+{{{
+<?php echo yui_button_to_remote('yui_button_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+}}}
+
+
+Create yui buttons:
+{{{
+<?php echo yui_button('yui_button'); ?>
+<?php echo yui_button_to('yui_button_to', 'http://yahoo.com/'); ?>
+<?php echo yui_button_to_function('yui_button_to_function', "alert('demo');") ?>
+}}}
+
+
+Ajax submit buttons:
+{{{
+<form action="/ysfYUI/ajaxContent" method="post">
+  <input type="hidden" name="yui_submit_to_remote" value="" />
+  <?php echo yui_submit_to_remote('yui_submit_remote_tag', 'yui_submit_remote_tag', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+  <?php echo yui_submit_image_to_remote('yui_submit_image_to_remote_tag', '/static/ysf/symfony/images/icons/ok48.png', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+</form>
+}}}
+
+Periodic background calls:
+{{{
+<?php yui_periodically_call_remote(array('url' => url_for('ysfYUI/ajaxContent?yui_periodically_call_remote=yui_periodically_call_remote'), 'update' => 'yui-content', 'frequency' => 5)); ?>
+<?php yui_periodically_call_function('function() { alert("yui_periodically_call_function"); }', array('frequency' => 5)); ?>
+}}}
+
+
+=== Forms ===
+
+The demo form class with YUI widgets:
+{{{
+class ysfDemoForm extends ysfYUIForm
+{
+
+  public function configure()
+  {
+    parent::configure();
+
+    $this->setDefault('radio', 'maybe');
+
+    $this->setWidgets(array(
+      'text'         => new ysfYUITextWidget(),
+      'select'       => new ysfYUISelectWidget(array('choices' => array('billing', 'tech support', 'sales'))),
+      'autocomplete' => new ysfYUITextWidget(array('datasource' => sfContext::getInstance()->getController()->genUrl('ysfYUI/autocomplete'))),
+      'editor'       => new ysfYUIEditorWidget(),
+      'radio'        => new ysfYUIRadioWidget(array('choices' => array('yes' => 'yes', 'no' => 'no', 'maybe' => 'maybe'))),
+      'calendar'     => new ysfYUICalendarWidget(),
+      'checkbox'     => new ysfYUICheckboxWidget(array(), array('value' => 'yui')),
+      'checkbox2'    => new ysfYUICheckboxWidget(array(), array('value' => 'ojay', 'checked' => true)),
+      'checkbox3'    => new ysfYUICheckboxWidget(array(), array('value' => 'dedchain')),
+      'colorpicker'  => new ysfYUIColorPickerWidget(),
+      'slider'       => new ysfYUISliderWidget(),
+      'file'         => new ysfYUIFileUploadWidget(),
+    ));
+
+    $this->setValidators(array(
+      'text'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'editor'     => new sfValidatorString(array('max_length' => 255, 'required' => false))
+    ));
+
+    $this->widgetSchema->setNameFormat('demo[%s]');
+
+    $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+  }
+}
+}}}
+
+The form action:
+{{{
+/**
+ * Executes demo action
+ */
+public function executeDemo($request)
+{
+  $this->form = new ysfDemoForm();
+
+  if($request->isMethod('post'))
+  {
+    $this->form->bind($request->getParameter('demo'));
+    if ($this->form->isValid() && $request->isXmlHttpRequest())
+    {
+      return $this->renderText(var_export($this->form->getValues(), true));
+    }
+  }
+}
+}}}
+
+The form:
+{{{
+<?php echo yui_form_remote_tag(array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+<table>
+  <?php echo $form; ?>
+  <tr><td colspan="2"><?php echo yui_submit_tag('save'); ?></td></tr>
+</table>
+</form>
+}}}
+
+
+
+== Containers ==
+
+Tab View:
+{{{
+<?php ysfYUI::addComponent('tabview'); ysfYUI::addEvent('demo', 'ready', "var demoTabs = new YAHOO.widget.TabView('demoTabs');"); ?>
+<div id="demo" class="yui-navset">
+  <ul class="yui-nav">
+    <li class="selected"><a href="#tab1"><em>Tab 1</em></a></li>
+    <li><a href="#tab2"><em>Tab 2</em></a></li>
+  </ul>
+  <div class="yui-content">
+    <div id="tab1">Tab 1 Content</div>
+    <div id="tab2">Tab 2 Content</div>
+  </div>
+</div>
+}}}
+
+Link to dialog:
+{{{
+<?php echo yui_link_to_dialog('yui_link_to_dialog'); ?>
+}}}
+
+Link to confirm modal dialog:
+{{{
+<?php echo yui_link_to_confirm_dialog('yui_link_to_confirm_dialog'); ?>
+}}}
+
+Create a animated tooltip:
+{{{
+<?php yui_tooltip('yui_tooltip', 'yahoo! tooltip'); ?>
+<span id="yui_tooltip" title="y! tooltip">yui_tooltip</span>
+}}}
 
 
 '''The plugin comes with a demo module and form that show how to use the various integrations.''' This also serves as a tutorial.
@@ -189,15 +360,20 @@ and syntax with the added benefit of an unobtrusive event driven design.
    * import new clientside validation
    * autocomplete: from array, xml, json
    * rich editor: flickr, calendar, media manager w/ upload / image cropper
-   
+
+   * add yui cdn combohandler support
+
+   * widget structure for buttons, tabview, animation like dojoWidget
+   * docs / tutorial: install/config, basics (dom, event system), forms + widgets, effects
+
    * admin generators with data table
    * currency, language, country widgets
    * time / date widgets
    * selectbox dropdown with autocomplete widget
    * number range selector -+ widget
-   
-   * caching
-   
+
+   * caching / compression via yuicompressor?
+
    * tests - unit for widgets, functional for events/components/widgets
 
 

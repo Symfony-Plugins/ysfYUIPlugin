@@ -1,8 +1,20 @@
 /**
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
+ * file that was distributed with this source code.
+ *
+ */
+
+
+/**
  * forms.js - Contains all symfony form related controls for creating new form controls and handling validation.
  *
  * @namespace YAHOO.symfony
- * @author    dustin.whittle@gmail.com
+ * @author    dustin.whittle@symfony-project.com
  * @version   0.1
  */
 
@@ -77,7 +89,7 @@ YAHOO.symfony.forms.validation =
 
       YAHOO.util.Dom.batch(YAHOO.util.Dom.getElementsByClassName('required'), function(e) { YAHOO.symfony.forms.validation.validate } )
     }
-    
+
 
     YAHOO.log('form validation initialized', 'info', 'symfony');
   },

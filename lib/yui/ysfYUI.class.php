@@ -1,14 +1,16 @@
 <?php
 
-/*
-* This file is part of the symfony package.
-* (c) 2007 Dustin Whittle <dustin.whittle@symfony-project.com>
-* (c) 2006 Nick Winfield <enquiries@superhaggis.com>
-* (c) 2006 Pierre Minnieur <pm@pierre-minnieur.de>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+/**
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
+ * file that was distributed with this source code.
+ *
+ */
+
 
 /**
  * ysfYUI adds the components javascript libraries to the current response
@@ -17,27 +19,44 @@
  * @package    ysymfony
  * @subpackage yui
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
+ * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Nick Winfield <enquiries@superhaggis.com>
  * @author     Pierre Minnieur <pm@pierre-minnieur.de>
  * @version    SVN: $Id: ysfYUI.class.php 2 2008-04-28 06:07:19Z dwhittle $
+ *
+ * @link http://trac.symfony-project.org/wiki/ysfYUIPlugin
+ * @link http://trac.symfony-project.org/browser/plugins/ysfYUIPlugin
+ * @link http://developer.yahoo.com/yui/
  */
 class ysfYUI
 {
 
+  const YUI_VERSION = '2.5.2';
+  const YUI_CDN     = 'http://yui.yahooapis.com/';
+
   private static $skin = 'sam';
 
   /**
-   * Holds a list of already included components to prevent including the
-   * same component twice. Adds stylesheets and javascript
+   * A list of already included components to prevent including the same component twice.
    *
    * @var array
    */
   private static $loadedComponents = array();
 
+  /**
+   * A list of optimized rollup components
+   *
+   * @var array
+   */
   private static $optimizedComponents = array();
 
   /**
-   * Javascript components available with their properties: skinnable, status, dependencies
+   * Javascript components available with their properties:
+   *
+   * type (yui, ojay, symfony)
+   * skinnable (has related css)
+   * status (alpha, beta, stable)
+   * dependencies (other components)
    *
    * @var array
    */
@@ -239,7 +258,9 @@ class ysfYUI
 
 
   /**
-   * Javascript optimizations
+   * Javascript optimizations (rollup/aggregated files)
+   *
+   * @todo make by type (yui, ojay, symfony)
    *
    * @var array
    */
@@ -261,7 +282,9 @@ class ysfYUI
                                               );
 
   /**
-   * Stylesheet optimizations
+   * Stylesheet optimizations (rollup/aggregated files)
+   *
+   * @todo make by type (yui, ojay, symfony)
    *
    * @var array
    */
@@ -292,6 +315,8 @@ class ysfYUI
    * Listens to the routing.load_configuration event.
    *
    * @param sfEvent An sfEvent instance
+   *
+   * @return void
    */
   static public function listenToRoutingLoadConfigurationEvent(sfEvent $event)
   {
@@ -306,6 +331,7 @@ class ysfYUI
    * Adds a component stylesheet to the list of included stylesheets.
    *
    * @param string $name The Yahoo! UI components name to include.
+   *
    * @return void
    */
   public static function addComponent($component, $dependency = false)
@@ -348,8 +374,7 @@ class ysfYUI
   }
 
   /**
-   * Adds a list of components
-   *
+   * Takes a list of components as arguments.
    */
   public static function addComponents()
   {
@@ -364,16 +389,33 @@ class ysfYUI
     return true;
   }
 
+  /**
+   * Returns the currently loaded components.
+   *
+   * @return array The components that are to be loaded
+   */
   public static function getLoadedComponents()
   {
     return array_unique(self::$loadedComponents);
   }
 
+  /**
+   * Returns all registered components (css + js).
+   *
+   * @return array The registered components
+   */
   public static function getComponents()
   {
     return array_unique(array_merge(self::$javascriptComponents, self::$stylesheetComponents));
   }
 
+  /**
+   * Returns the javascripts for loaded components.
+   *
+   * @param boolean $optimize Return optimized components (aggregated) or expanded
+   *
+   * @return array The javascripts to be loaded
+   */
   public static function getJavascripts($optimize = false)
   {
 
@@ -404,6 +446,7 @@ class ysfYUI
 
           if($matches == $count)
           {
+            // handle combohandler: <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yahoo-dom-event/yahoo-dom-event.js&2.5.2/build/container/container_core-min.js"></script>
             $optimizedJavascript = sprintf('%s/%s/%s.js', $yui_lib_web_dir, $javascript, $javascript);
             self::$optimizedComponents = array_merge(self::$optimizedComponents, $components);
           }
@@ -435,6 +478,13 @@ class ysfYUI
     return self::$javascripts;
   }
 
+  /**
+   * Returns the stylesheets for loaded components.
+   *
+   * @param boolean $optimize Return optimized components (aggregated) or expanded
+   *
+   * @return array The stylesheets to be loaded
+   */
   public static function getStylesheets($optimize = false)
   {
 
@@ -507,6 +557,13 @@ class ysfYUI
     return self::$stylesheets;
   }
 
+  /**
+   * Sets the current skin.
+   *
+   * @param string $skin The skin to set
+   *
+   * @return boolean If skin was set (in allowed list)
+   */
   public static function setSkin($skin)
   {
     if(in_array($skin, sfConfig::get('yui_allowed_skins', array('sam'))))
@@ -521,16 +578,37 @@ class ysfYUI
     }
   }
 
+  /**
+   * Returns the current skin.
+   *
+   * @return string The current skin
+   */
   public static function getSkin()
   {
     return (empty(self::$skin) === true) ? sfConfig::get('yui_default_skin') : self::$skin;
   }
 
+  /**
+   * Adds a javascript event.
+   *
+   * @param string $id The dom element id (window, document, id)
+   * @param string $handler The dom event to listen to (ready, available, click, blur, submit)
+   * @param string $event The event (javascript)
+   *
+   * @link http://developer.yahoo.com/yui/event/
+   */
   public static function addEvent($id, $handler, $event)
   {
     self::$events[$id][$handler][] = trim($event);
   }
 
+  /**
+   * Returns all javascript events.
+   *
+   * @param boolean $remove To remove all events after returning
+   *
+   * @return string The javascript events
+   */
   public static function getEvents($remove = false)
   {
     self::addComponent('event');
@@ -643,10 +721,13 @@ class ysfYUI
    *     )),
    *   )) ?>
    *
-   * @param string $effect
-   * @param string $element
-   * @param array $options
-   * @return string $js
+   * @param string $effect The animation
+   * @param string $element The dom element id
+   * @param array $options The options for animation object
+   *
+   * @return string The javascript for animation
+   *
+   * @link http://developer.yahoo.com/yui/animation/
    */
   public static function animation($effect, $element, $options = array())
   {
@@ -831,10 +912,12 @@ class ysfYUI
    *
    * @param string $method HTTP transaction method
    * @param string $uri Fully qualified path of resource
-   * @param array $callbacks User-defined callback function or object
+   * @param array $callbacks User-defined callback function
    * @param string $postData Optional POST body
-   * @return string $js
-   * @see http://developer.yahoo.com/yui/docs/YAHOO.util.Connect.html#asyncRequest
+   *
+   * @return string The javascript for connection
+   *
+   * @link http://developer.yahoo.com/yui/connection/
    */
   public static function connection($method = 'POST', $uri, $callbacks = array(), $postData = null)
   {
@@ -930,11 +1013,6 @@ class ysfYUI
     $js .= ");";
 
     return $js;
-  }
-
-  public static function button($name, $options)
-  {
-    // ysfYUI::addEvent('');
   }
 
 }

@@ -1,10 +1,20 @@
 <?php
 
 /**
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
+ * file that was distributed with this source code.
+ */
+
+/**
  * ysfYUI Actions.
  *
- * @package    symfony
- * @subpackage actions
+ * @package    ysymfony
+ * @subpackage yui
  * @author     Dustin Whittle <dustin.whittle@gmail.com>
  * @version    SVN: $Id: actions.class.php 2 2008-04-28 06:07:19Z dwhittle $
  */
@@ -16,6 +26,15 @@ class ysfYUIActions extends sfActions
   public function executeStudio($request)
   {
     $this->form = new ysfDemoForm();
+
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('demo'));
+      if ($this->form->isValid() && $request->isXmlHttpRequest())
+      {
+        return $this->renderText(var_export($this->form->getValues(), true));
+      }
+    }
   }
 
   /**
@@ -23,7 +42,11 @@ class ysfYUIActions extends sfActions
    */
   public function executeAjaxContent($request)
   {
-    return $this->renderText('Ajax Content! - '.time()."\n\n".var_export($request->getParameterHolder()->getAll(), true));
+    if($request->isXmlHttpRequest())
+    {
+      return $this->renderText('Ajax Content! - '.time()."\n\n".var_export($request->getParameterHolder()->getAll(), true));
+    }
+
   }
 
   /**

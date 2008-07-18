@@ -1,18 +1,20 @@
 <?php
 
-/*
- * This file is part of the symfony package.
- * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * (c) 2004 David Heinemeier Hansson
+/**
  *
- * For the full copyright and license information, please view the LICENSE
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
  * file that was distributed with this source code.
+ *
  */
 
 /**
  * TagHelper defines some base helpers to construct html tags.
  *
- * @package    symfony
+ * @package    ysymfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson

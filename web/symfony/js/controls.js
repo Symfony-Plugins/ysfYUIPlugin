@@ -1,17 +1,30 @@
 /**
-* controls.js - Contains all custom controls
-*
-* @namespace YAHOO.symfony
-* @author    dustin.whittle@symfony-project.com
-* @version   0.1
-*/
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
+ * file that was distributed with this source code.
+ *
+ */
+
+
+/**
+ * controls.js - Contains all custom controls
+ *
+ * @namespace YAHOO.symfony
+ * @author    dustin.whittle@symfony-project.com
+ * @version   0.1
+ */
 
 /*
  * Warning: This needs to be totally rewritten.
  */
+
 /**
  * Check for YUI + symfony availability
-*/
+ */
 
 /**
  * YAHOO.symfony.controls - symfony controls

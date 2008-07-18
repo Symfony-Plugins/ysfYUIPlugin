@@ -1,15 +1,22 @@
 <?php
 
-/*
- * For the full copyright and license information, please view the LICENSE
+/**
+ *
+ * Copyright (c) 2008 Yahoo! Inc.  All rights reserved.
+ * The copyrights embodied in the content in this file are licensed
+ * under the MIT open source license.
+ *
+ * For the full copyright and license information, please view the LICENSE.yahoo
  * file that was distributed with this source code.
+ *
  */
+
 
 /**
  * ysfYUITextWidget represents an HTML text input tag.
  *
  * @package    ysymfony
- * @subpackage yui
+ * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
  * @version    SVN: $Id$
@@ -24,6 +31,7 @@ class ysfYUITextWidget extends sfWidgetForm
    * Available options:
    *
    *  * type: The widget type (text by default)
+   *  * datasource: URL for autocomplete
    *
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes
