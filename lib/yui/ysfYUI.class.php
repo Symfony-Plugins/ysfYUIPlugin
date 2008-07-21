@@ -31,8 +31,8 @@
 class ysfYUI
 {
 
-  const YUI_VERSION = '2.5.2';
-  const YUI_CDN     = 'http://yui.yahooapis.com/';
+  const YUI_VERSION   = '2.5.2';
+  const YUI_CDN       = 'http://yui.yahooapis.com/';
 
   private static $skin = 'sam';
 

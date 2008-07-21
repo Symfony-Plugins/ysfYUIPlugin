@@ -141,7 +141,7 @@ all:
   default:
     culture:          en
     skin:             sam
-    components:       [ yahoo, dom, event, connection, animation]
+    components:       [ reset, fonts, grids, yahoo, dom, event, connection, animation ]
 
   output:
     xhtml_negotation: false
@@ -316,7 +316,7 @@ The form:
 
 
 
-== Containers ==
+=== Containers ===
 
 Tab View:
 {{{

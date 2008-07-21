@@ -42,7 +42,7 @@ version: 2.5.2
 
 /* resizeable columns */
 .yui-dt-hd {
-    zoom:1;
+    zoom:1; 
 }
 th.yui-dt-resizeable .yui-dt-liner {
     position:relative;
@@ -64,7 +64,7 @@ th.yui-dt-resizeable .yui-dt-liner {
 }
 
 /* hidden columns */
-.yui-skin-sam th.yui-dt-hidden .yui-dt-liner,
+.yui-skin-sam th.yui-dt-hidden .yui-dt-liner, 
 .yui-skin-sam td.yui-dt-hidden .yui-dt-liner {
     margin:0;
     padding:0;
@@ -79,7 +79,7 @@ th.yui-dt-resizeable .yui-dt-liner {
 .yui-dt-scrollable .yui-dt-hd {
     overflow:hidden;
     position:relative; /* for ie overflow bug http://rowanw.com/bugs/overflow_relative.htm */
-}
+} 
 
 /* editing */
 .yui-dt-editor {
