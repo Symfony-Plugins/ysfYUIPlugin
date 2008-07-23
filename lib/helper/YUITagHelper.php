@@ -223,3 +223,16 @@ function _convert_options($options)
 
   return $options;
 }
+
+
+/**
+ * Generates short random id for element.
+ */
+function generate_id($name = null)
+{
+  static $i;
+
+  $i++;
+
+  return  'y'.$i.'id';
+}

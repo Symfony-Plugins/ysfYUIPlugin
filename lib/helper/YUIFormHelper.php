@@ -808,7 +808,7 @@ function yui_submit_tag($name = 'Save changes', $options = array())
   $html_options['type'] = 'submit';
   $html_options['name'] = 'submit';
   $html_options['value'] = $name;
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
 
   ysfYUI::addEvent('document', 'ready', "var button".$html_options['id']." = new YAHOO.widget.Button('".$html_options['id']."-container');");
 
@@ -844,7 +844,7 @@ function yui_reset_tag($name = 'Reset', $options = array())
   $html_options['type'] = 'reset';
   $html_options['name'] = 'reset';
   $html_options['value'] = $name;
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
 
   ysfYUI::addEvent('document', 'ready', "var button".$html_options['id']." = new YAHOO.widget.Button('".$html_options['id']."-container');");
 

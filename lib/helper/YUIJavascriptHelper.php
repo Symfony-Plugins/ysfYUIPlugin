@@ -103,7 +103,7 @@ function yui_link_to_function($name, $function, $html_options = array())
 
   $html_options = _parse_attributes($html_options);
 
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['href'] = isset($html_options['href']) ? $html_options['href'] : '#';
 
   ysfYUI::addEvent($html_options['id'], 'click', 'YAHOO.util.Event.preventDefault(e); '.$function);
@@ -124,7 +124,7 @@ function yui_button($name, $html_options = array())
 
   $html_options['type'] = 'button';
   $html_options['value'] = $name;
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
 
   ysfYUI::addEvent('document', 'ready', "var button".$html_options['id']." = new YAHOO.widget.Button('".$html_options['id']."-container');");
 
@@ -159,7 +159,7 @@ function yui_button_to($name, $internal_uri ='', $options = array())
 {
   $html_options = _parse_attributes($options);
 
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['value'] = $name;
 
   if (isset($html_options['post']) && $html_options['post'])
@@ -306,7 +306,7 @@ function yui_button_to_function($name, $function, $html_options = array())
 
   $html_options['type'] = 'button';
   $html_options['value'] = $name;
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
 
   ysfYUI::addEvent('document', 'ready', "var button".$html_options['id']." = new YAHOO.widget.Button('".$html_options['id']."-container');");
 
@@ -505,7 +505,7 @@ function yui_form_remote_tag($options = array(), $html_options = array())
     unset($options['success']);
   }
 
-  $id = isset($html_options['id']) ? $html_options['id'] : 'y'.md5(rand(0, 1000000));
+  $id = isset($html_options['id']) ? $html_options['id'] : generate_id();
   $html_options['id'] = $id;
 
   $js = 'var c = YAHOO.util.Connect;';
@@ -533,7 +533,7 @@ function yui_submit_to_remote($name, $value, $options = array(), $html_options =
   $options = _parse_attributes($options);
   $html_options = _parse_attributes($html_options);
 
-  $id = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $id = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['id'] = $id;
 
   $url = '';
@@ -597,7 +597,7 @@ function yui_submit_image_to_remote($name, $source, $options = array(), $html_op
     $html_options['alt'] = ucfirst(substr($source, $begin, $nb_str));
   }
 
-  $id = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $id = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['id'] = $id;
 
   $url = '';
@@ -1172,7 +1172,7 @@ function yui_link_to_dialog($name, $html_options = array())
 {
   $html_options = _parse_attributes($html_options);
 
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['href'] = isset($html_options['href']) ? $html_options['href'] : '#';
 
   ysfYUI::addEvent($html_options['id'], 'click', "
@@ -1199,7 +1199,7 @@ function yui_link_to_confirm_dialog($name, $html_options = array())
 
   $html_options = _parse_attributes($html_options);
 
-  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : 'y'.md5($name);
+  $html_options['id'] = isset($html_options['id']) ? $html_options['id'] : generate_id($name);
   $html_options['href'] = isset($html_options['href']) ? $html_options['href'] : '#';
 
   ysfYUI::addEvent($html_options['id'], 'click', "
@@ -1229,7 +1229,7 @@ function yui_tooltip($id, $text = null, $options = array())
 
   $options['context'] = "'".$id."'";
 
-  $id = 'ytooltip'.md5($id);
+  $id = 'ytooltip'.generate_id($id);
 
   if(!is_null($text))
   {
