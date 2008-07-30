@@ -73,7 +73,7 @@ class ysfYUI
                                                'button'       => array('type'         => 'yui',
                                                                        'skinnable'    => true,
                                                                        'status'       => 'stable',
-                                                                       'dependencies' => array('element', 'menu')),
+                                                                       'dependencies' => array('element', 'container', 'menu')),
 
                                                'calendar'     => array('type'         => 'yui',
                                                                        'skinnable'    => true,

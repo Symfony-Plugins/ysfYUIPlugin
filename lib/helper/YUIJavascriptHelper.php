@@ -738,25 +738,36 @@ function yui_remote_function($options)
 {
   ysfYUI::addComponents('dom', 'event', 'connection');
 
+  $events = array();
   if(isset($options['update']) && is_array($options['update']))
   {
     if(isset($options['update']['success']))
     {
-      $success = $options['update']['success'];
+      $events = array('success' => "function(o) { YAHOO.util.Dom.get('".$options['update']['success']."').innerHTML = o.responseText; }");
     }
     if(isset($options['update']['failure']))
     {
-      $failure = $options['update']['failure'];
+      $events = array('failure' => "function(o) { YAHOO.util.Dom.get('".$options['update']['failure']."').innerHTML = o.responseText; }");
     }
   }
   elseif(isset($options['update']))
   {
-    $success = $options['update'];
-    $failure = $options['update'];
+    $events = array('success' => "function(o) { YAHOO.util.Dom.get('".$options['update']."').innerHTML = o.responseText; }",
+                    'failure' => "function(o) { YAHOO.util.Dom.get('".$options['update']."').innerHTML = o.responseText; }");
+  }
+
+  if(isset($options['success']))
+  {
+    $events['success'] = 'function(o) { '.$options['success'].'}';
+  }
+
+  if(isset($options['failure']))
+  {
+    $events['failure'] = 'function(o) { '.$options['failure'].'}';
   }
 
   // handle $javascript_options + post data ?name=value&name2=value2
-  $function = ysfYUI::connection('GET', $options['url'], array('success' => "function(o) { YAHOO.util.Dom.get('".$success."').innerHTML = o.responseText; }", 'failure' => "function(o) { YAHOO.util.Dom.get('".$failure."').innerHTML = o.responseText; }"));
+  $function = ysfYUI::connection('GET', $options['url'], $events);
 
   if(isset($options['before']))
   {
