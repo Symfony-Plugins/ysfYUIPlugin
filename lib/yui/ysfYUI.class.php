@@ -942,7 +942,7 @@ class ysfYUI
     $js = '';
 
     $js .= "var connection = YAHOO.util.Connect; ";
-    $js .= "connection.initHeader('X-Requested-With', 'XMLHttpRequest'); ";
+    $js .= "connection.initHeader('X_REQUESTED_WITH', 'XMLHttpRequest'); ";
     $js .= "connection.asyncRequest('" . $method . "', '" . $uri . "', ";
 
     // callbacks

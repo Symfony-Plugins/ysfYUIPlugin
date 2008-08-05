@@ -510,7 +510,7 @@ function yui_form_remote_tag($options = array(), $html_options = array())
 
   $js = 'var c = YAHOO.util.Connect;';
   $js .= 'c.setForm(YAHOO.util.Dom.get("'.$id.'"));';
-  $js .= 'c.initHeader("X-Requested-With", "XMLHttpRequest");';
+  $js .= 'c.initHeader("X_REQUESTED_WITH", "XMLHttpRequest");';
   $js .= 'c.asyncRequest("POST", "'.$url.'",{success:function(o){'.$update.$success.'}});';
 
   ysfYUI::addEvent($id, 'submit', 'YAHOO.util.Event.preventDefault(e); '.$js);
@@ -559,7 +559,7 @@ function yui_submit_to_remote($name, $value, $options = array(), $html_options =
 
   $js = 'var c = YAHOO.util.Connect;';
   $js .= 'c.setForm(YAHOO.util.Dom.get("'.$id.'-container").parentNode);';
-  $js .= 'c.initHeader("X-Requested-With", "XMLHttpRequest");';
+  $js .= 'c.initHeader("X_REQUESTED_WITH", "XMLHttpRequest");';
   $js .= 'c.asyncRequest("POST", "'.$url.'",{ success: function(o) {'.$update.$success.'}});';
 
   $html_options['name'] = $name;
@@ -623,7 +623,7 @@ function yui_submit_image_to_remote($name, $source, $options = array(), $html_op
 
   $js = 'var c = YAHOO.util.Connect;';
   $js .= 'c.setForm(YAHOO.util.Dom.get("'.$id.'").parentNode);';
-  $js .= 'c.initHeader("X-Requested-With", "XMLHttpRequest");';
+  $js .= 'c.initHeader("X_REQUESTED_WITH", "XMLHttpRequest");';
   $js .= 'c.asyncRequest("POST", "'.$url.'",{ success: function(o) {'.$update.$success.'}});';
 
   ysfYUI::addEvent($html_options['id'], 'click', 'YAHOO.util.Event.preventDefault(e); '.$js);
