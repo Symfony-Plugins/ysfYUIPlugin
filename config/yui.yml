@@ -10,7 +10,7 @@ all:
   lib_web_dir:        /static/ysf/yui
   suffix:             -min
 
-  # symfony YUI - [forms, debug, admin]
+  # symfony YUI - forms, debug, admin
   sf_web_dir:         /static/ysf/symfony
 
   # YUI Addons - carousel, domcollapse, yuiaddons [tools, forms, effects], cropper, sweettitles, lightbox

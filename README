@@ -41,10 +41,10 @@ ysfYUIPlugin provides a few integrations for these utilities:
    * yui_form_remote_tag, yui_submit_tag, yui_submit_to_remote, yui_submit_image_to_remote
    * yui_reset_tag
 
-   * yui_grid, yui_layout
-   * yui_toolbar, yui_container, yui_menu, yui_dialog, yui_tooltip
-   * yui_tabview, yui_treeview
-   * yui_datatable, yui_accordion, yui_lightbox, yui_collapse, yui_carousel, yui_resizable
+   * yui_grid, yui_layout (in progress)
+   * yui_toolbar, yui_container, yui_menu, yui_dialog, yui_tooltip  (in progress)
+   * yui_tabview, yui_treeview  (in progress)
+   * yui_datatable, yui_accordion, yui_lightbox, yui_collapse, yui_carousel, yui_resizable  (in progress)
 
 === Y! UI Widgets ===
 
@@ -81,11 +81,18 @@ symfony plugin:install ysfYUIPlugin
 This plugin can be downloaded and installed into the plugins directory of your project.
 
 {{{
-svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/branches/1.1 ysfYUIPlugin
+svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
 }}}
 
 
 == Configuration ==
+
+Add YUI helper in settings.yml:
+{{{
+all:
+    # Helpers included in all templates by default
+    standard_helpers:       [Partial, Cache, I18N, Form, YUI]
+}}}
 
 By default the ysfYUIPlugin changes the default view class to use '''ysfYUIView''' for handling the loading of the Yahoo! User Interface libraries (css/js) and managing generated events:
 {{{
