@@ -60,13 +60,6 @@
   margin: 0;
 }
 
-#sfWebDebugBar .menu
-{
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
 #sfWebDebugBar .menu li
 {
   display: inline-block;
