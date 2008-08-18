@@ -1,21 +1,22 @@
-= ysfYUIPlugin - symfony + Yahoo! User Interface libraries =
+ysfYUIPlugin - symfony + Yahoo! User Interface libraries
+========================================================
 
 The ysfYUIPlugin provides [http://symfony-project.com symfony] integration with the [http://developer.yahoo.com/yui/ Yahoo! User Interface libraries] is a complete foundation for enterprise web applications.
 
 The Yahoo! User Interface (YUI) Library is a set of utilities and controls, written in JavaScript, for building richly interactive web applications using techniques such as DOM scripting, DHTML and AJAX.
 
-   * '''YUI Developer Tools'''
+   * *YUI Developer Tools*
       * Logger Control
       * Profiler (client-side, cross-browser profiling)
       * ProfilerViewer Control
       * YUI Test Utility
-   * '''YUI Core'''
+   * *YUI Core*
       * YAHOO Global Object (base requirement for all YUI components)
       * DOM Collection (convenience methods for DOM interactions)
       * Event Utility (event normalization and custom events)
-   * '''YUI Library Utilities''': Animation Utility, Browser History Manager, Connection Manager (for XHR/Ajax), Cookie Utility, , DataSource Utility, Drag and Drop Utility, Element Utility, Get Utility (dynamic script/css loading), ImageLoader Utility, JSON Utility, Resize Utility, Selector Utility, The YUI Loader Utility
-   * '''YUI Library Controls/Widgets''': AutoComplete, Button, Calendar, Charts, Color Picker, Container (including Module, Overlay, Panel, Tooltip, Dialog, SimpleDialog), DataTable, ImageCropper, Layout Manager, Menu, Rich Text Editor, Slider, TabView, TreeView, Uploader
-   * '''YUI Library CSS Tools'''
+   * *YUI Library Utilities*: Animation Utility, Browser History Manager, Connection Manager (for XHR/Ajax), Cookie Utility, , DataSource Utility, Drag and Drop Utility, Element Utility, Get Utility (dynamic script/css loading), ImageLoader Utility, JSON Utility, Resize Utility, Selector Utility, The YUI Loader Utility
+   * *YUI Library Controls/Widgets*: AutoComplete, Button, Calendar, Charts, Color Picker, Container (including Module, Overlay, Panel, Tooltip, Dialog, SimpleDialog), DataTable, ImageCropper, Layout Manager, Menu, Rich Text Editor, Slider, TabView, TreeView, Uploader
+   * *YUI Library CSS Tools*
       * CSS Reset (neutralizes browser CSS styles)
       * CSS Base (applies consistent style foundation for common elements)
       * CSS Fonts (foundation for typography and font-sizing)
@@ -32,7 +33,8 @@ ysfYUIPlugin provides a few integrations for these utilities:
    * Clientside Form Validation
 
 
-=== Y! UI Helpers ===
+Y! UI Helpers
+-------------
 
    * yui_link_to_function, yui_link_to_remote
    * yui_periodically_call_function, yui_periodically_call_remote
@@ -46,7 +48,8 @@ ysfYUIPlugin provides a few integrations for these utilities:
    * yui_tabview, yui_treeview  (in progress)
    * yui_datatable, yui_accordion, yui_lightbox, yui_collapse, yui_carousel, yui_resizable  (in progress)
 
-=== Y! UI Widgets ===
+Y! UI Widgets
+-------------
 
    * ysfYUITextWidget (autocomplete / inline edit options)
    * ysfYUICheckboxWidget
@@ -60,307 +63,305 @@ ysfYUIPlugin provides a few integrations for these utilities:
    * ysfYUIColorPickerWidget
    * ysfYUISliderWidget
 
-== License ==
+License
+-------
 
 ysfYUIPlugin code is released under the [http://www.opensource.org/licenses/mit-license.php MIT license] and is free for all uses. All components in the YUI Library
 have been released as open source under a [http://www.opensource.org/licenses/bsd-license.php BSD license] and are free for all uses. See the
-included '''LICENSE''' files for the complete license.
+included *LICENSE* files for the complete license.
 
-== Installation ==
+Installation
+------------
 
 You can install symfony two ways:
 
-'''1. Install the plugin via the symfony cli'''
+*1. Install the plugin via the symfony cli*
 
-{{{
-symfony plugin:install ysfYUIPlugin
-}}}
+    symfony plugin:install ysfYUIPlugin
 
-'''2. Install the plugin via subversion'''
+
+*2. Install the plugin via subversion*
 
 This plugin can be downloaded and installed into the plugins directory of your project.
 
-{{{
-svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
-}}}
+    svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
 
 
-== Configuration ==
+Configuration
+-------------
 
 Add YUI helper in settings.yml:
-{{{
-all:
-    # Helpers included in all templates by default
-    standard_helpers:       [Partial, Cache, I18N, Form, YUI]
-}}}
 
-By default the ysfYUIPlugin changes the default view class to use '''ysfYUIView''' for handling the loading of the Yahoo! User Interface libraries (css/js) and managing generated events:
-{{{
-all:
-  enabled:          on
-  view_class:       ysfYUI
-  is_internal:      off
-}}}
+    all:
+        # Helpers included in all templates by default
+        standard_helpers:       [Partial, Cache, I18N, Form, YUI]
 
-Edit the application  '''factories.yml''' and update the logger factory for 'sf_web_debug' to enable the enhanced debug toolbar:
-{{{
-  logger:
-    class: sfAggregateLogger
-    param:
-      level: debug
-      loggers:
-        sf_web_debug:
-          class: ysfYUIWebDebugLogger
-          param:
-            condition:       %SF_WEB_DEBUG%
-            xdebug_logging:  true
-            web_debug_class: ysfYUIWebDebug
-}}}
+
+By default the ysfYUIPlugin changes the default view class to use *ysfYUIView* for handling the loading of the Yahoo! User Interface libraries (css/js) and managing generated events:
+
+    all:
+      enabled:          on
+      view_class:       ysfYUI
+      is_internal:      off
+
+
+Edit the application  *factories.yml* and update the logger factory for 'sf_web_debug' to enable the enhanced debug toolbar:
+
+      logger:
+        class: sfAggregateLogger
+        param:
+          level: debug
+          loggers:
+            sf_web_debug:
+              class: ysfYUIWebDebugLogger
+              param:
+                condition:       %SF_WEB_DEBUG%
+                xdebug_logging:  true
+                web_debug_class: ysfYUIWebDebug
+
 
 The ysfYUIPlugin is extremely configurable per environment via the application level yui.yml:
-{{{
-prod:
-  suffix:             -min
 
-dev:
-  suffix:             -debug
+    prod:
+      suffix:             -min
+    
+    dev:
+      suffix:             -debug
+    
+    all:
+    
+      # Yahoo! User Interface Libraries
+      lib_web_dir:        /static/ysf/yui
+      suffix:             -min
+    
+      # symfony YUI - [forms, debug, admin]
+      sf_web_dir:         /static/ysf/symfony
+    
+      # YUI Addons - carousel, domcollapse, yuiaddons [tools, forms, effects], cropper, sweettitles, lightbox
+      addons_web_dir:     /static/ysf/yui-addons
+      assets_web_dir:     /static/ysf/assets
+    
+      # ExtJS Libraries
+      ext_web_dir:        /static/ysf/ext
+    
+      allowed:
+        cultures:         [ en ]
+        skins:            [ sam ]
+    
+      default:
+        culture:          en
+        skin:             sam
+        components:       [ reset, fonts, grids, yahoo, dom, event, connection, animation ]
+    
+      output:
+        xhtml_negotation: false
+    
+      # route management
+      routes:
+        register:    false    # let yui handle routes (faster to add to routing.yml and disable here)
+    
+      # behavior caching
+      cache:
+        enabled:     true     # cache behaviors
+        ttl:         9600     # cache expiration in seconds
+    
+      # use ysfYUI loader + ysfYUIView
+      loader:
+        enabled:     true      # let sfYUI handl js/css inclusions
+        optimize:    true      # use rollup files to reduce connections
 
-all:
 
-  # Yahoo! User Interface Libraries
-  lib_web_dir:        /static/ysf/yui
-  suffix:             -min
+Usage
+-----
 
-  # symfony YUI - [forms, debug, admin]
-  sf_web_dir:         /static/ysf/symfony
+Loading css/javascript
+----------------------
 
-  # YUI Addons - carousel, domcollapse, yuiaddons [tools, forms, effects], cropper, sweettitles, lightbox
-  addons_web_dir:     /static/ysf/yui-addons
-  assets_web_dir:     /static/ysf/assets
-
-  # ExtJS Libraries
-  ext_web_dir:        /static/ysf/ext
-
-  allowed:
-    cultures:         [ en ]
-    skins:            [ sam ]
-
-  default:
-    culture:          en
-    skin:             sam
-    components:       [ reset, fonts, grids, yahoo, dom, event, connection, animation ]
-
-  output:
-    xhtml_negotation: false
-
-  # route management
-  routes:
-    register:    false    # let yui handle routes (faster to add to routing.yml and disable here)
-
-  # behavior caching
-  cache:
-    enabled:     true     # cache behaviors
-    ttl:         9600     # cache expiration in seconds
-
-  # use ysfYUI loader + ysfYUIView
-  loader:
-    enabled:     true      # let sfYUI handl js/css inclusions
-    optimize:    true      # use rollup files to reduce connections
-}}}
-
-
-== Usage ==
-
-=== Basics ===
-
-==== Loading css/javascript ====
 Loading YUI Components from am action or view:
-{{{
-<?php ysfYUI::addComponents('reset', 'fonts', 'grids', 'dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
-}}}
+
+    <?php ysfYUI::addComponents('reset', 'fonts', 'grids', 'dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
+
 
 ysfYUI will automatically resolve dependencies and use optimized rollup files:
-{{{
-<?php ysfYUI::addComponent('tabview'); ?>
-}}}
 
-==== Events ====
+    <?php ysfYUI::addComponent('tabview'); ?>
+
+
+Events
+------
 Add events to dom elements unobtrsuively with php:
 
 Equivalent of YAHOO.util.Event.OnDomReady:
-{{{
-ysfYUI::addEvent('document', 'ready', "alert('hello world')");
-}}}
+
+    ysfYUI::addEvent('document', 'ready', "alert('hello world')");
 
 Add a click event to a dom element:
-{{{
-ysfYUI::addEvent('domID', 'click', "alert('hello world')");
-}}}
+
+    ysfYUI::addEvent('domID', 'click', "alert('hello world')");
+
 
 The same via helper:
-{{{
-yui_add_event('document', 'ready', "alert('hello world');
-}}}
+
+    yui_add_event('document', 'ready', "alert('hello world');
+
 
 Similar to the sfUJSPlugin, this plugin will modify your existing helpers to add unobtrusive events:
-{{{
-<?php echo link_to('alert via link + onclick', 'content/about', array('onclick' => 'alert("hello world");')); ?>
-}}}
+
+    <?php echo link_to('alert via link + onclick', 'content/about', array('onclick' => 'alert("hello world");')); ?>
+
 
 Add an event to link to javascript function:
-{{{
-<?php echo yui_link_to_function('yui_link_to_function', "alert('demo');") ?>
-}}}
 
-=== Ajax + Buttons ===
+    <?php echo yui_link_to_function('yui_link_to_function', "alert('demo');") ?>
+
+
+Ajax + Buttons
+--------------
 
 Most of the rails inspired scriptaculous javascript helpers have equivalent functionality and syntax with the added benefit of an unobtrusive event driven design.
 
 Create an unobtrusive ajax text link:
-{{{
-<?php echo yui_link_to_remote('yui_link_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
-}}}
+
+    <?php echo yui_link_to_remote('yui_link_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+
 
 Create a yui button and onclick update a dom element with the result:
-{{{
-<?php echo yui_button_to_remote('yui_button_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
-}}}
+
+    <?php echo yui_button_to_remote('yui_button_to_remote', array('url' => url_for('ysfYUI/ajaxContent'), 'update' => 'yui-content')) ?>
+
 
 
 Create yui buttons:
-{{{
-<?php echo yui_button('yui_button'); ?>
-<?php echo yui_button_to('yui_button_to', 'http://yahoo.com/'); ?>
-<?php echo yui_button_to_function('yui_button_to_function', "alert('demo');") ?>
-}}}
+
+    <?php echo yui_button('yui_button'); ?>
+    <?php echo yui_button_to('yui_button_to', 'http://yahoo.com/'); ?>
+    <?php echo yui_button_to_function('yui_button_to_function', "alert('demo');") ?>
+
 
 
 Ajax submit buttons:
-{{{
-<form action="/ysfYUI/ajaxContent" method="post">
-  <input type="hidden" name="yui_submit_to_remote" value="" />
-  <?php echo yui_submit_to_remote('yui_submit_remote_tag', 'yui_submit_remote_tag', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
-  <?php echo yui_submit_image_to_remote('yui_submit_image_to_remote_tag', '/static/ysf/symfony/images/icons/ok48.png', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
-</form>
-}}}
+
+    <form action="/ysfYUI/ajaxContent" method="post">
+      <input type="hidden" name="yui_submit_to_remote" value="" />
+      <?php echo yui_submit_to_remote('yui_submit_remote_tag', 'yui_submit_remote_tag', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+      <?php echo yui_submit_image_to_remote('yui_submit_image_to_remote_tag', '/static/ysf/symfony/images/icons/ok48.png', array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+    </form>
 
 Periodic background calls:
-{{{
-<?php yui_periodically_call_remote(array('url' => url_for('ysfYUI/ajaxContent?yui_periodically_call_remote=yui_periodically_call_remote'), 'update' => 'yui-content', 'frequency' => 5)); ?>
-<?php yui_periodically_call_function('function() { alert("yui_periodically_call_function"); }', array('frequency' => 5)); ?>
-}}}
+
+    <?php yui_periodically_call_remote(array('url' => url_for('ysfYUI/ajaxContent?yui_periodically_call_remote=yui_periodically_call_remote'), 'update' => 'yui-content', 'frequency' => 5)); ?>
+    <?php yui_periodically_call_function('function() { alert("yui_periodically_call_function"); }', array('frequency' => 5)); ?>
 
 
-=== Forms ===
+
+Forms
+-----
 
 The demo form class with YUI widgets:
-{{{
-class ysfDemoForm extends ysfYUIForm
-{
 
-  public function configure()
-  {
-    parent::configure();
+    class ysfDemoForm extends ysfYUIForm
+    {
+    
+      public function configure()
+      {
+        parent::configure();
+    
+        $this->setDefault('radio', 'maybe');
+    
+        $this->setWidgets(array(
+          'text'         => new ysfYUITextWidget(),
+          'select'       => new ysfYUISelectWidget(array('choices' => array('billing', 'tech support', 'sales'))),
+          'autocomplete' => new ysfYUITextWidget(array('datasource' => sfContext::getInstance()->getController()->genUrl('ysfYUI/autocomplete'))),
+          'editor'       => new ysfYUIEditorWidget(),
+          'radio'        => new ysfYUIRadioWidget(array('choices' => array('yes' => 'yes', 'no' => 'no', 'maybe' => 'maybe'))),
+          'calendar'     => new ysfYUICalendarWidget(),
+          'checkbox'     => new ysfYUICheckboxWidget(array(), array('value' => 'yui')),
+          'checkbox2'    => new ysfYUICheckboxWidget(array(), array('value' => 'ojay', 'checked' => true)),
+          'checkbox3'    => new ysfYUICheckboxWidget(array(), array('value' => 'dedchain')),
+          'colorpicker'  => new ysfYUIColorPickerWidget(),
+          'slider'       => new ysfYUISliderWidget(),
+          'file'         => new ysfYUIFileUploadWidget(),
+        ));
+    
+        $this->setValidators(array(
+          'text'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+          'editor'     => new sfValidatorString(array('max_length' => 255, 'required' => false))
+        ));
+    
+        $this->widgetSchema->setNameFormat('demo[%s]');
+    
+        $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+      }
+    }
 
-    $this->setDefault('radio', 'maybe');
-
-    $this->setWidgets(array(
-      'text'         => new ysfYUITextWidget(),
-      'select'       => new ysfYUISelectWidget(array('choices' => array('billing', 'tech support', 'sales'))),
-      'autocomplete' => new ysfYUITextWidget(array('datasource' => sfContext::getInstance()->getController()->genUrl('ysfYUI/autocomplete'))),
-      'editor'       => new ysfYUIEditorWidget(),
-      'radio'        => new ysfYUIRadioWidget(array('choices' => array('yes' => 'yes', 'no' => 'no', 'maybe' => 'maybe'))),
-      'calendar'     => new ysfYUICalendarWidget(),
-      'checkbox'     => new ysfYUICheckboxWidget(array(), array('value' => 'yui')),
-      'checkbox2'    => new ysfYUICheckboxWidget(array(), array('value' => 'ojay', 'checked' => true)),
-      'checkbox3'    => new ysfYUICheckboxWidget(array(), array('value' => 'dedchain')),
-      'colorpicker'  => new ysfYUIColorPickerWidget(),
-      'slider'       => new ysfYUISliderWidget(),
-      'file'         => new ysfYUIFileUploadWidget(),
-    ));
-
-    $this->setValidators(array(
-      'text'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'editor'     => new sfValidatorString(array('max_length' => 255, 'required' => false))
-    ));
-
-    $this->widgetSchema->setNameFormat('demo[%s]');
-
-    $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
-  }
-}
-}}}
 
 The form action:
-{{{
-/**
- * Executes demo action
- */
-public function executeDemo($request)
-{
-  $this->form = new ysfDemoForm();
 
-  if($request->isMethod('post'))
-  {
-    $this->form->bind($request->getParameter('demo'));
-    if ($this->form->isValid() && $request->isXmlHttpRequest())
+    /**
+     * Executes demo action
+     */
+    public function executeDemo($request)
     {
-      return $this->renderText(var_export($this->form->getValues(), true));
+      $this->form = new ysfDemoForm();
+    
+      if($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('demo'));
+        if ($this->form->isValid() && $request->isXmlHttpRequest())
+        {
+          return $this->renderText(var_export($this->form->getValues(), true));
+        }
+      }
     }
-  }
-}
-}}}
+
 
 The form:
-{{{
-<?php echo yui_form_remote_tag(array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
-<table>
-  <?php echo $form; ?>
-  <tr><td colspan="2"><?php echo yui_submit_tag('save'); ?></td></tr>
-</table>
-</form>
-}}}
+
+    <?php echo yui_form_remote_tag(array('url' => 'ysfYUI/ajaxContent', 'update' => 'yui-content')) ?>
+    <table>
+      <?php echo $form; ?>
+      <tr><td colspan="2"><?php echo yui_submit_tag('save'); ?></td></tr>
+    </table>
+    </form>
 
 
-
-=== Containers ===
+Containers
+----------
 
 Tab View:
-{{{
-<?php ysfYUI::addComponent('tabview'); ysfYUI::addEvent('demo', 'ready', "var demoTabs = new YAHOO.widget.TabView('demoTabs');"); ?>
-<div id="demo" class="yui-navset">
-  <ul class="yui-nav">
-    <li class="selected"><a href="#tab1"><em>Tab 1</em></a></li>
-    <li><a href="#tab2"><em>Tab 2</em></a></li>
-  </ul>
-  <div class="yui-content">
-    <div id="tab1">Tab 1 Content</div>
-    <div id="tab2">Tab 2 Content</div>
-  </div>
-</div>
-}}}
+
+    <?php ysfYUI::addComponent('tabview'); ysfYUI::addEvent('demo', 'ready', "var demoTabs = new YAHOO.widget.TabView('demoTabs');"); ?>
+    <div id="demo" class="yui-navset">
+      <ul class="yui-nav">
+        <li class="selected"><a href="#tab1"><em>Tab 1</em></a></li>
+        <li><a href="#tab2"><em>Tab 2</em></a></li>
+      </ul>
+      <div class="yui-content">
+        <div id="tab1">Tab 1 Content</div>
+        <div id="tab2">Tab 2 Content</div>
+      </div>
+    </div>
+
 
 Link to dialog:
-{{{
-<?php echo yui_link_to_dialog('yui_link_to_dialog'); ?>
-}}}
+
+    <?php echo yui_link_to_dialog('yui_link_to_dialog'); ?>
 
 Link to confirm modal dialog:
-{{{
-<?php echo yui_link_to_confirm_dialog('yui_link_to_confirm_dialog'); ?>
-}}}
+
+    <?php echo yui_link_to_confirm_dialog('yui_link_to_confirm_dialog'); ?>
+
 
 Create a animated tooltip:
-{{{
-<?php yui_tooltip('yui_tooltip', 'yahoo! tooltip'); ?>
-<span id="yui_tooltip" title="y! tooltip">yui_tooltip</span>
-}}}
+
+    <?php yui_tooltip('yui_tooltip', 'yahoo! tooltip'); ?>
+    <span id="yui_tooltip" title="y! tooltip">yui_tooltip</span>
+
+*The plugin comes with a demo module and form that show how to use the various integrations.* This also serves as a tutorial.
 
 
-'''The plugin comes with a demo module and form that show how to use the various integrations.''' This also serves as a tutorial.
-
-
-== TODO ==
+TODO
+----
 
    * propel 1.2 logging for yui debug toolbar
    * implement all widget options for js
@@ -384,5 +385,6 @@ Create a animated tooltip:
    * tests - unit for widgets, functional for events/components/widgets
 
 
-== CHANGELOG ==
+CHANGELOG
+---------
 
