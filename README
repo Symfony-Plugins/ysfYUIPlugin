@@ -86,6 +86,8 @@ This plugin can be downloaded and installed into the plugins directory of your p
 
     svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
 
+    Make a symlink from web/static/ysf to project/plugins/web/static
+
 
 Configuration
 -------------
@@ -177,7 +179,7 @@ Usage
 Loading css/javascript
 ----------------------
 
-Loading YUI Components from am action or view:
+Loading YUI Components from an action or view:
 
     <?php ysfYUI::addComponents('reset', 'fonts', 'grids', 'dom', 'event', 'connection', 'animation', 'dragdrop', 'menu', 'tabview'); ?>
 
