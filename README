@@ -84,7 +84,7 @@ You can install symfony two ways:
 
 This plugin can be downloaded and installed into the plugins directory of your project.
 
-    svn export http://svn.symfony-project.org/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
+    svn export http://svn.symfony-project.com/plugins/ysfYUIPlugin/trunk ysfYUIPlugin
 
     Make a symlink from web/static/ysf to project/plugins/web/static
 
