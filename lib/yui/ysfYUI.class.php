@@ -85,6 +85,11 @@ class ysfYUI
                                                                        'status'       => 'experimental',
                                                                        'dependencies' => array('event', 'dom')),
 
+						                                   'carousel'     => array('type'         => 'yui',
+                                                                       'skinnable'    => true,
+                                                                       'status'       => 'beta',
+                                                                       'dependencies' => array('animation', 'dom', 'event')),
+
                                                'colorpicker'  => array('type'         => 'yui',
                                                                        'skinnable'    => true,
                                                                        'status'       => 'stable',
@@ -102,17 +107,17 @@ class ysfYUI
 
                                                'cookie'       => array('type'         => 'yui',
                                                                        'skinnable'    => false,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('event', 'dom')),
 
                                                'datasource'   => array('type'         => 'yui',
                                                                        'skinnable'    => false,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('event', 'connection')),
 
                                                'datatable'    => array('type'         => 'yui',
                                                                        'skinnable'    => true,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('element', 'datasource', 'calendar', 'dragdrop', 'connection')),
 
                                                'dom'          => array('type'         => 'yui',
@@ -127,7 +132,7 @@ class ysfYUI
 
                                                'editor'       => array('type'         => 'yui',
                                                                        'skinnable'    => true,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('container', 'menu', 'element', 'button', 'animation', 'dragdrop')),
 
                                                'element'      => array('type'         => 'yui',
@@ -167,7 +172,7 @@ class ysfYUI
 
                                                'layout'       => array('type'         => 'yui',
                                                                        'skinnable'    => true,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('event', 'dom', 'animation', 'dragdrop', 'element', 'resize')),
 
                                                'logger'       => array('type'         => 'yui',
@@ -180,9 +185,14 @@ class ysfYUI
                                                                        'status'       => 'stable',
                                                                        'dependencies' => array('container')),
 
+																						 	 'paginator'    => array('type'        => 'yui',
+																								                       'skinnable'    => true,
+																								                       'status'       => 'stable',
+																								                       'dependencies' => array('animation', 'dom', 'event')),
+
                                                'profiler'     => array('type'         => 'yui',
                                                                        'skinnable'    => false,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('event', 'dom')),
 
                                                'profilerviewer' => array('type'       => 'yui',
@@ -192,7 +202,7 @@ class ysfYUI
 
                                                'resize'       => array('type'         => 'yui',
                                                                        'skinnable'    => true,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array('dom', 'event', 'animation')),
 
                                                'selector'     => array('type'         => 'yui',
@@ -227,7 +237,7 @@ class ysfYUI
 
                                                'yuiloader'    => array('type'         => 'yui',
                                                                        'skinnable'    => false,
-                                                                       'status'       => 'beta',
+                                                                       'status'       => 'stable',
                                                                        'dependencies' => array()),
 
                                                'yuitest'      => array('type'         => 'yui',
